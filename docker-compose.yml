@@ -1,0 +1,30 @@
+version: "3"
+
+networks:
+  app_network:
+
+services:
+  app:
+    image: express-app
+    ports:
+    - "3000:3000"
+    environment:
+      - "DB_HOSTNAME=mongodb://mongo:27017"
+    networks:
+      - app_network
+    depends_on:
+      - mongo
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/status"]
+  mongo:
+    image: mongo:latest
+    ports:
+    - "27017:27017"
+    networks:
+      - app_network
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
+

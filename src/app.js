@@ -18,6 +18,7 @@ require("./config/db")(err => {
   app.use(bodyParser.json({ type: "application/json" }));
 
   // ROUTERS
+  app.use("/status", require("./api/status"));
   app.use("/users", require("./api/users"));
   const port = process.env.PORT || 3000;
   app.listen(port);
